@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_part_02/custom/border_box.dart';
 import 'package:flutter_ui_part_02/utils/sample_data.dart';
 import 'package:flutter_ui_part_02/utils/widget_function.dart';
 
@@ -19,81 +20,164 @@ class HomeScreen extends StatelessWidget {
       body: Container(
         height: screenSize.height,
         width: screenSize.height,
-        child: Column(
-          children: [
-            addVerticalSpace(padding),
-            Padding(
-              padding: sidePadding,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Hello Bambang",
-                        style: themeData.textTheme.headline1,
-                      ),
-                      addVerticalSpace(10),
-                      Text(
-                        "Let's listen to something cool today",
-                        style: themeData.textTheme.subtitle2,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: themeData.colorScheme.background.withOpacity(0.3),
-                      shape: BoxShape.circle,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              addVerticalSpace(padding),
+              Padding(
+                padding: sidePadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Hello Bambang",
+                          style: themeData.textTheme.headline1,
+                        ),
+                        addVerticalSpace(10),
+                        Text(
+                          "Let's listen to something cool today",
+                          style: themeData.textTheme.subtitle2,
+                        ),
+                      ],
                     ),
-                    child: Badge(
-                      position: const BadgePosition(top: 7, end: 10),
-                      badgeColor: themeData.colorScheme.secondary,
-                      child: Icon(
-                        Icons.notifications_none_rounded,
-                        color: themeData.colorScheme.onBackground,
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color:
+                            themeData.colorScheme.background.withOpacity(0.3),
+                        shape: BoxShape.circle,
                       ),
+                      child: Badge(
+                        position: const BadgePosition(top: 7, end: 10),
+                        badgeColor: themeData.colorScheme.secondary,
+                        child: Icon(
+                          Icons.notifications_none_rounded,
+                          color: themeData.colorScheme.onBackground,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              addVerticalSpace(padding),
+              Padding(
+                padding: sidePadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Your favorite artist",
+                      style: themeData.textTheme.headline4,
                     ),
-                  )
-                ],
+                    IconButton(
+                        onPressed: () {},
+                        splashColor:
+                            themeData.colorScheme.secondary.withOpacity(0.2),
+                        splashRadius: 20,
+                        iconSize: 16,
+                        icon: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: themeData.colorScheme.onPrimary,
+                        ))
+                  ],
+                ),
               ),
-            ),
-            addVerticalSpace(padding),
-            Padding(
-              padding: sidePadding,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Your favorite artist",
-                    style: themeData.textTheme.headline4,
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      splashColor:
-                          themeData.colorScheme.secondary.withOpacity(0.2),
-                      splashRadius: 20,
-                      iconSize: 16,
-                      icon: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: themeData.colorScheme.onPrimary,
-                      ))
-                ],
+              addVerticalSpace(5),
+              SizedBox(
+                height: screenSize.width * 0.26,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: artistData.length,
+                    itemBuilder: (context, index) {
+                      return FavoriteArtist(artistData: artistData[index]);
+                    }),
               ),
-            ),
-            addVerticalSpace(5),
-            Expanded(
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: artistData.length,
-                  itemBuilder: (context, index) {
-                    return FavoriteArtist(artistData: artistData[index]);
-                  }),
-            )
-          ],
+              addVerticalSpace(padding),
+              Padding(
+                padding: sidePadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Recent played",
+                      style: themeData.textTheme.headline4,
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        splashColor:
+                            themeData.colorScheme.secondary.withOpacity(0.2),
+                        splashRadius: 20,
+                        iconSize: 16,
+                        icon: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: themeData.colorScheme.onPrimary,
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: screenSize.height * 0.25,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: playlistData.length,
+                    itemBuilder: (context, index) {
+                      return BorderBox(
+                          height: screenSize.height * 0.25,
+                          width: screenSize.width * 0.3,
+                          image: playlistData[index]["image"].toString(),
+                          title: playlistData[index]["name"].toString(),
+                          type: 1);
+                    }),
+              ),
+              addVerticalSpace(padding),
+              Padding(
+                padding: sidePadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Made for you",
+                      style: themeData.textTheme.headline4,
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        splashColor:
+                            themeData.colorScheme.secondary.withOpacity(0.2),
+                        splashRadius: 20,
+                        iconSize: 16,
+                        icon: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: themeData.colorScheme.onPrimary,
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: screenSize.height * 0.25,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: playlistData.length,
+                    itemBuilder: (context, index) {
+                      return BorderBox(
+                          height: screenSize.height * 0.2,
+                          width: screenSize.width * 0.3,
+                          image: playlistData[index]["image"].toString(),
+                          title: playlistData[index]["name"].toString(),
+                          type: 2);
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     ));
@@ -117,12 +201,10 @@ class FavoriteArtist extends StatelessWidget {
             SizedBox(
               height: size.width * 0.18,
               width: size.width * 0.18,
-              child: CircleAvatar(
-                child: ClipOval(
-                  child: Image.asset(
-                    artistData["image"].toString(),
-                    fit: BoxFit.fill,
-                  ),
+              child: ClipOval(
+                child: Image.asset(
+                  artistData["image"].toString(),
+                  fit: BoxFit.fill,
                 ),
               ),
             ),

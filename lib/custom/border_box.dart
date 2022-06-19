@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_part_02/utils/widget_function.dart';
 
 class BorderBox extends StatelessWidget {
   final double height;
@@ -19,53 +20,65 @@ class BorderBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    return Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: type == 1 || type == 0
-          ? Column(
-              children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15)),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.fill,
+    return Row(
+      children: [
+        addHorizontalSpace(20),
+        Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: type == 1 || type == 0
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: width,
+                      width: width,
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        child: Image.asset(
+                          image,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
-                  ),
+                    if (type == 1)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          title!,
+                          style: themeData.textTheme.bodyText1,
+                        ),
+                      ),
+                  ],
+                )
+              : Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                      child: Image.asset(
+                        image,
+                        fit: BoxFit.fill,
+                        height: height,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    if (type == 2)
+                      Positioned(
+                        bottom: 10,
+                        child: Text(
+                          title!,
+                          style: themeData.textTheme.bodyText1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                  ],
                 ),
-                if (type == 1)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      title!,
-                      style: themeData.textTheme.headline4,
-                    ),
-                  ),
-              ],
-            )
-          : Stack(
-              children: [
-                Image.asset(
-                  image,
-                  fit: BoxFit.fill,
-                ),
-                if (type == 2)
-                  Positioned(
-                    bottom: 10,
-                    child: Text(
-                      title!,
-                      style: themeData.textTheme.headline4,
-                    ),
-                  ),
-              ],
-            ),
+        ),
+      ],
     );
   }
 }
