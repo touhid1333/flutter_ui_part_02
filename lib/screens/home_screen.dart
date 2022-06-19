@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_part_02/utils/sample_data.dart';
 import 'package:flutter_ui_part_02/utils/widget_function.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -60,17 +61,80 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             addVerticalSpace(padding),
-            Row(
-              children: [
-                Text(
-                  "Your favorite artist",
-                  style: themeData.textTheme.headline4,
-                )
-              ],
+            Padding(
+              padding: sidePadding,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Your favorite artist",
+                    style: themeData.textTheme.headline4,
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      splashColor:
+                          themeData.colorScheme.secondary.withOpacity(0.2),
+                      splashRadius: 20,
+                      iconSize: 16,
+                      icon: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: themeData.colorScheme.onPrimary,
+                      ))
+                ],
+              ),
             ),
+            addVerticalSpace(5),
+            Expanded(
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: artistData.length,
+                  itemBuilder: (context, index) {
+                    return FavoriteArtist(artistData: artistData[index]);
+                  }),
+            )
           ],
         ),
       ),
     ));
+  }
+}
+
+class FavoriteArtist extends StatelessWidget {
+  final dynamic artistData;
+
+  const FavoriteArtist({Key? key, required this.artistData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
+    final size = MediaQuery.of(context).size;
+    return Row(
+      children: [
+        addHorizontalSpace(20),
+        Column(
+          children: [
+            SizedBox(
+              height: size.width * 0.18,
+              width: size.width * 0.18,
+              child: CircleAvatar(
+                child: ClipOval(
+                  child: Image.asset(
+                    artistData["image"].toString(),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
+            addVerticalSpace(10),
+            Text(
+              artistData["name"].toString(),
+              style: themeData.textTheme.bodyText1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
