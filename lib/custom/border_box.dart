@@ -47,7 +47,7 @@ class BorderBox extends StatelessWidget {
                     ),
                     if (type == 1)
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
                           title!,
                           style: themeData.textTheme.bodyText1,
@@ -63,6 +63,7 @@ class BorderBox extends StatelessWidget {
                         image,
                         fit: BoxFit.fill,
                         height: height,
+                        width: width,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),

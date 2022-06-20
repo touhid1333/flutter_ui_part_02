@@ -1,6 +1,10 @@
 # flutter_ui_part_02
 
-Random UI practices flutter, inspired from drible.
+Random UI practices flutter, inspired from dribble.
+
+# Sample
+
+<img src="https://github.com/touhid1333/flutter_ui_part_02/blob/master/assets/images/sample.png" width="375" height="667">
 
 ## Getting Started
 
