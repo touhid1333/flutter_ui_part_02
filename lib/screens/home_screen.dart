@@ -21,9 +21,10 @@ class HomeScreen extends StatelessWidget {
         height: screenSize.height,
         width: screenSize.height,
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              addVerticalSpace(padding),
               Padding(
                 padding: sidePadding,
                 child: Row(
@@ -87,6 +88,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               addVerticalSpace(5),
+              //fav artist horizontal
               SizedBox(
                 height: screenSize.width * 0.26,
                 child: ListView.builder(
@@ -121,23 +123,30 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              //recent played playlist start
               SizedBox(
-                height: screenSize.height * 0.25,
+                height: 170,
                 child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     itemCount: playlistData.length,
                     itemBuilder: (context, index) {
-                      return BorderBox(
-                          height: screenSize.height * 0.25,
-                          width: screenSize.width * 0.3,
-                          image: playlistData[index]["image"].toString(),
-                          title: playlistData[index]["name"].toString(),
-                          type: 1);
+                      return playlistData[index]["fav"] == true
+                          ? BorderBox(
+                              height: 170,
+                              width: 120,
+                              image: playlistData[index]["image"].toString(),
+                              title: playlistData[index]["name"].toString(),
+                              type: 1)
+                          : const SizedBox(
+                              height: 0,
+                              width: 0,
+                            );
                     }),
               ),
-              addVerticalSpace(padding),
+              //recent played playlist end
+              addVerticalSpace(10),
               Padding(
                 padding: sidePadding,
                 child: Row(
@@ -160,22 +169,29 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              //made for you playlist start
               SizedBox(
-                height: screenSize.height * 0.25,
+                height: 150,
                 child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     itemCount: playlistData.length,
                     itemBuilder: (context, index) {
-                      return BorderBox(
-                          height: screenSize.height * 0.2,
-                          width: screenSize.width * 0.3,
-                          image: playlistData[index]["image"].toString(),
-                          title: playlistData[index]["name"].toString(),
-                          type: 2);
+                      return playlistData[index]["fav"] == false
+                          ? BorderBox(
+                              height: 170,
+                              width: 120,
+                              image: playlistData[index]["image"].toString(),
+                              title: playlistData[index]["name"].toString(),
+                              type: 2)
+                          : const SizedBox(
+                              height: 0,
+                              width: 0,
+                            );
                     }),
               ),
+              //made for you playlist end
             ],
           ),
         ),
